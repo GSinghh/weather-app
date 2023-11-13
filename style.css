@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap');
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Comfortaa';
+}
+body {
+    padding: 20px;
+    height: 100vh;
+    background: url("images/pics/backgroundTwo.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+input {
+    font-size: 15px;
+    font-weight: 500;
+    padding: 10px;
+    background-color: transparent;  
+    border:none;
+    border-bottom: 2px solid black;
+    outline: none;
+}
+input::placeholder {
+    color: #000;
+}
