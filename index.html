@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Weather App</title>
     <link rel = "stylesheet" href="style.css">
-    <script type = "module" src = "main.js" defer></script>
-    <script type = "module" src = "apiMethods.js" defer></script>
+    <script type = "module" src = "./js/main.js" defer></script>
+    <script type = "module" src = "./js/apiMethods.js" defer></script>
+    <script type = "module" src = "./js/domMethods.js" defer></script>
 </head>
 <body>
     <div class = "info-container">
@@ -14,6 +15,14 @@
             <form id = "city">
                 <input type = "text" id = "search-bar" placeholder="Enter City Name">
             </form>
+        </div>
+        <!-- <div class = "weather-info">
+            <div class = "city-name"></div>
+            <div class = "current-time"></div>
+            <div class = "weather-title"></div>
+        </div> -->
+        <div class = "weather-forecast">
+            
         </div>
     </div>
 </body>
