@@ -34,4 +34,8 @@ const formatDate = (date) => {
     return months[dateSplit[1]] + ' ' + dateSplit[2];
 }
 
-export { organizeDataByDay, formatDate }
+const convertWeather = (temp) => {
+    return Math.round((temp - 273.15) * (9/5) + 32)
+}
+
+export { organizeDataByDay, formatDate, convertWeather }
