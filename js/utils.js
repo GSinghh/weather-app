@@ -1,17 +1,26 @@
 var months = {
-    1: "January",
-    2: "February",
+    1: "Jan",
+    2: "Feb",
     3: "March",
     4: "April",
     5: "May",
     6: "June",
     7: "July",
-    8: "August",
-    9: "September",
-    10: "October",
-    11: "November",
-    12: "December",
+    8: "Aug",
+    9: "Sep",
+    10: "Oct",
+    11: "Nov",
+    12: "Dec",
 };
+
+const formatDate = (date) => {
+    const dateSplit = date.split('-');
+    return months[dateSplit[1]] + ' ' + dateSplit[2];
+}
+
+const convertKelvinToFahrenheit = (temp) => {
+    return Math.round((temp - 273.15) * (9/5) + 32)
+}
 
 const organizeDataByDay = (weatherData) => {
     const dayData = {}
@@ -29,13 +38,31 @@ const organizeDataByDay = (weatherData) => {
     return dayData;
 }
 
-const formatDate = (date) => {
-    const dateSplit = date.split('-');
-    return months[dateSplit[1]] + ' ' + dateSplit[2];
+const calcAverageTemp = (organizedData) => {
+
+    let tempArray = [];
+
+    for(const key in organizedData)
+    {
+        if(organizedData.hasOwnProperty(key))
+        {
+            let totalTemp = 0;
+            const weatherItems = organizedData[key];
+
+            for(const index in weatherItems)
+            {
+                if(weatherItems.hasOwnProperty(index))
+                {
+                    totalTemp += weatherItems[index].main.temp;
+                }
+            }
+            const averageTemp = totalTemp / weatherItems.length;
+            tempArray.push(convertKelvinToFahrenheit(averageTemp));
+        }
+
+    }
+    
+    return tempArray;
 }
 
-const convertWeather = (temp) => {
-    return Math.round((temp - 273.15) * (9/5) + 32)
-}
-
-export { organizeDataByDay, formatDate, convertWeather }
+export { organizeDataByDay, formatDate, convertKelvinToFahrenheit, calcAverageTemp }
