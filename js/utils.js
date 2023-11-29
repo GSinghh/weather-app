@@ -38,10 +38,11 @@ const organizeDataByDay = (weatherData) => {
     return dayData;
 }
 
-const calcAverageTemp = (organizedData) => {
+const calcAverageTempAndConditions = (organizedData) => {
 
-    let tempArray = [];
-
+    let averageTemps = [];
+    let weatherConditons = {};
+    
     for(const key in organizedData)
     {
         if(organizedData.hasOwnProperty(key))
@@ -51,18 +52,50 @@ const calcAverageTemp = (organizedData) => {
 
             for(const index in weatherItems)
             {
+                if(!weatherConditons.hasOwnProperty(formatDate(key)))
+                {
+                    weatherConditons[formatDate(key)] = [weatherItems[index].weather[0].main];
+                }
+                else
+                {
+                    weatherConditons[formatDate(key)].push(weatherItems[index].weather[0].main)
+                }
+
                 if(weatherItems.hasOwnProperty(index))
                 {
                     totalTemp += weatherItems[index].main.temp;
+                    // console.log(key, weatherItems[index].weather[0].main);
                 }
             }
             const averageTemp = totalTemp / weatherItems.length;
-            tempArray.push(convertKelvinToFahrenheit(averageTemp));
+            averageTemps.push(convertKelvinToFahrenheit(averageTemp));
         }
 
     }
-    
-    return tempArray;
+    // console.log(weatherConditons);
+    weatherConditionHelper(weatherConditons);
+    return averageTemps;
 }
 
-export { organizeDataByDay, formatDate, convertKelvinToFahrenheit, calcAverageTemp }
+const weatherConditionHelper = (weatherConditions) => {
+    
+    let wordCount = {};
+    let dailyCondtions = {};
+    for (const key in weatherConditions)
+    {
+        if (weatherConditions.hasOwnProperty(key))
+        {
+            let conditionsArray = weatherConditions[key];
+            conditionsArray.forEach(word => {
+                wordCount[word] = (wordCount[word] || 0) + 1;
+            }); 
+        }
+        let maxWord = Object.keys(wordCount).reduce((a,b) => wordCount[a] > wordCount[b] ? a : b);
+        let maxCount = wordCount[maxWord];
+
+        console.log(`The word that appears the most is '${maxWord}' with ${maxCount} occurrences.`);
+    }
+
+}
+
+export { organizeDataByDay, formatDate, convertKelvinToFahrenheit, calcAverageTempAndConditions }
