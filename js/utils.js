@@ -100,8 +100,6 @@ const frequencyCounter = (conditionsArray) => {
     // Find the word that appears the most
     let maxWord = Object.keys(wordCount).reduce((a, b) => wordCount[a] > wordCount[b] ? a : b);
 
-    let maxCount = wordCount[maxWord];
-
     return maxWord;
 
 }
