@@ -40,7 +40,7 @@ const organizeDataByDay = (weatherData) => {
 
 const calcAverageTempAndConditions = (organizedData) => {
 
-    let averageTemps = [];
+    let averageTemps = {};
     let weatherConditons = {};
     
     for(const key in organizedData)
@@ -68,33 +68,41 @@ const calcAverageTempAndConditions = (organizedData) => {
                 }
             }
             const averageTemp = totalTemp / weatherItems.length;
-            averageTemps.push(convertKelvinToFahrenheit(averageTemp));
+            averageTemps[formatDate(key)] = convertKelvinToFahrenheit(averageTemp) + '°';
         }
 
     }
-    // console.log(weatherConditons);
-    weatherConditionHelper(weatherConditons);
-    return averageTemps;
+    let weatherPerDay = weatherConditionHelper(weatherConditons);
+    return { averageTemps, weatherPerDay };
 }
 
 const weatherConditionHelper = (weatherConditions) => {
     
-    let wordCount = {};
-    let dailyCondtions = {};
-    for (const key in weatherConditions)
-    {
-        if (weatherConditions.hasOwnProperty(key))
-        {
+    let weatherPerDay = {};
+    for (const key in weatherConditions) {
+        if (weatherConditions.hasOwnProperty(key)) {
             let conditionsArray = weatherConditions[key];
-            conditionsArray.forEach(word => {
-                wordCount[word] = (wordCount[word] || 0) + 1;
-            }); 
+            let word = frequencyCounter(conditionsArray);
+            weatherPerDay[key] = word;
         }
-        let maxWord = Object.keys(wordCount).reduce((a,b) => wordCount[a] > wordCount[b] ? a : b);
-        let maxCount = wordCount[maxWord];
-
-        console.log(`The word that appears the most is '${maxWord}' with ${maxCount} occurrences.`);
     }
+    return weatherPerDay;
+}
+
+const frequencyCounter = (conditionsArray) => {
+    let wordCount = {};
+
+    // Iterate over the array and count the occurrences of each word
+    conditionsArray.forEach(word => {
+        wordCount[word] = (wordCount[word] || 0) + 1;
+    });
+
+    // Find the word that appears the most
+    let maxWord = Object.keys(wordCount).reduce((a, b) => wordCount[a] > wordCount[b] ? a : b);
+
+    let maxCount = wordCount[maxWord];
+
+    return maxWord;
 
 }
 
