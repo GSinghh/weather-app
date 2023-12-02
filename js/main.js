@@ -1,17 +1,17 @@
-import { getWeatherData, urlBuilder } from './apiMethods.js'
+import { getWeatherData } from './apiMethods.js'
+import { organizeDataByDay, calcAverageTempAndConditions } from './utils.js'; 
+import { changeCity, renderData } from './domMethods.js';
 
 document.getElementById('city').addEventListener("submit", async (e) => {
     e.preventDefault();
-    const cityName = document.getElementById('search-bar').value;
-    const weatherInfo = await getWeatherData(cityName);
-    importantInfo(weatherInfo);
-});
-
-const importantInfo = (data) => {
-    var weatherData = {
-        "name": data.city.name,
-        "temp": data.list[0].main.temp,
+    const input = document.getElementById('search-bar');
+    const cityName = input.value;
+    const weatherData = await getWeatherData(cityName);
+    if(weatherData) {
+        const dayData = organizeDataByDay(weatherData);
+        const {averageTemps, weatherPerDay} = calcAverageTempAndConditions(dayData);
+        renderData(averageTemps, weatherPerDay);
+        changeCity(cityName);
     }
-    console.log(data);
-    console.log(weatherData);
-}
+    input.value = ' ';
+});
