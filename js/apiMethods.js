@@ -10,13 +10,30 @@ const getWeatherData = async (CITY_NAME) => {
         const response = await fetch(urlBuilder(CITY_NAME));
         if(!response.ok)
         {
-            const errorMessage = await response.text();
-            throw new Error('HTTP error!')
+            throw new Error(`Failed to Fetch Weather Data, Status: ${response.status}` )
         }
         const weatherData = await response.json();
+        clearErrorMessage();
         return weatherData;
     } catch (error) {
-        console.error(error);
+        console.error('Error fetching weather data', error);
+        displayErrorMessage(`Error: ${error.message}`);
+        return null;
+    }
+}
+
+const displayErrorMessage = (message) => {
+    const errorMessageDiv = document.querySelector('.error-message');
+        if(errorMessageDiv) {
+            errorMessageDiv.textContent = `Error: ${message}`;
+        }
+}
+
+const clearErrorMessage = () => {
+    const errorMessageDiv = document.querySelector('.error-message');
+    if(errorMessageDiv)
+    {
+        errorMessageDiv.textContent = ' ';
     }
 }
 
