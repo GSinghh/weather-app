@@ -8,6 +8,11 @@ const urlBuilder = (CITY_NAME) => {
 const getWeatherData = async (CITY_NAME) => {
     try {
         const response = await fetch(urlBuilder(CITY_NAME));
+        if(!response.ok)
+        {
+            const errorMessage = await response.text();
+            throw new Error('HTTP error!')
+        }
         const weatherData = await response.json();
         return weatherData;
     } catch (error) {
