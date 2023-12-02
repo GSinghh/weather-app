@@ -46,7 +46,7 @@ const createDiv = (path, temp, date) => {
 
 const changeCity = (city) => {
     const cityName = document.querySelector('.city-name');
-    cityName.value = city;
+    cityName.textContent = city;
 }
 
 export {changeCity, renderData}
