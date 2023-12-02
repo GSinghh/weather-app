@@ -29,6 +29,7 @@ input::placeholder {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 20px 20px;
 }
 .city-name {
     padding: 10px;
@@ -36,6 +37,8 @@ input::placeholder {
     font-size: 45px;
     background-color: rgba(0,0,0,0.6);
     color: white;
+    min-height: 70px;
+    min-width: 200px;
 }
 .weather-container {
     position: absolute;
@@ -52,6 +55,7 @@ input::placeholder {
     align-items: center;
     justify-content: center;
     flex: 1;
+    height: 200px;
 }
 .weather-icon {
     padding: 10px;
@@ -64,4 +68,7 @@ input::placeholder {
 .weather-icon > img {
     height: 50px;
     width: 50px;
+}
+.error-message {
+    color: rgb(238, 2, 2);
 }
